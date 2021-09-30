@@ -8,10 +8,10 @@
         
     <title><%= pageTitle %> </title>
 </head>
-<body>
-    
-        
-       
+<body>  
+ 
+ 
+
     <% if(isLogIn) { %> 
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
@@ -20,10 +20,10 @@
         </div>
       </nav>
    <% } %> 
-   <% if(nombre) { %> 
+   <% if(username) { %> 
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand">Adios <%= nombre %> </a>
+          <a class="navbar-brand">Adios <%= username %> </a>
           
         </div>
       </nav>

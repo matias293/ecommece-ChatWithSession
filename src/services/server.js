@@ -13,6 +13,7 @@ import apiRouter from '../routes/index';
 import authRouter from '../routes/auth'
 import { productsPersistencia } from '../persistencia/productos';
 import { mensajesPersistencia } from '../persistencia/mensajes';
+import Usuario from '../models/usuario'
 
 const StoreOptions = {
 
@@ -40,22 +41,35 @@ app.use(express.urlencoded({ extended: true }));
 
 
 
-
-
 const publicFolderPath = path.resolve(__dirname, '../../public');
 app.use(express.static(publicFolderPath));
 
 
 app.use('/api', apiRouter);
 app.use('/',authRouter)
+
+app.use(async(req, res, next) => {
+  if(!req.session.user){
+    return next()
+  }
+  const user = Usuario.findById(req.session.user._id)
+  
+   req.user = user
+   next()
+})
+
+
+
 app.use('/',(req,res,next)=>{
+  console.log(req.session)
 
   if(req.session.loggedIn){
-    return res.render('home',{pageTitle:'Home', mensaje:req.session.nombre, isLogIn:req.session.loggedIn,nombre:''})
+    return res.render('home',{pageTitle:'Home', mensaje:req.session.user.username, isLogIn:req.session.loggedIn,username:''})
   }
- 
-  res.render('home',{pageTitle:'Home',isLogIn:false,nombre:''})
+  res.render('home',{pageTitle:'Home',isLogIn:false,username:''})
 })
+
+
 
 
 
