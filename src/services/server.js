@@ -54,7 +54,7 @@ app.use(async(req, res, next) => {
     return next()
   }
   const user = Usuario.findById(req.session.user._id)
-  
+   if(!user) next()
    req.user = user
    next()
 })
@@ -62,7 +62,7 @@ app.use(async(req, res, next) => {
 
 
 app.use('/',(req,res,next)=>{
-  console.log(req.session)
+  
 
   if(req.session.loggedIn){
     return res.render('home',{pageTitle:'Home', mensaje:req.session.user.username, isLogIn:req.session.loggedIn,username:''})
