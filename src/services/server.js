@@ -22,7 +22,7 @@ const StoreOptions = {
     mongoOptions: advancedOptions,
   }),
 
-
+  cookie: { maxAge: 600000 },
   secret: 'shhhhhhhhhhhhhhhhhhhhh',
   resave: false,
   saveUninitialized: false 
@@ -49,6 +49,7 @@ app.use('/api', apiRouter);
 app.use('/',authRouter)
 
 app.use(async(req, res, next) => {
+  
   if(!req.session.user){
     return next()
   }

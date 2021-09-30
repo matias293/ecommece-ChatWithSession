@@ -33,11 +33,17 @@ class Auth {
      
 
      getLogOut  = (req,res) => {
+          if(!req.session.loggedIn){
+             return res.redirect('/')
+          }
+
         const username = req.session.username
          
          req.session.destroy();
          
-         res.render('home',{pageTitle:'Home',isLogIn:false,username})
+          res.render('home',{pageTitle:'Home',isLogIn:false,username})
+
+         
      }
 
      getSignUp = (req,res) => {
